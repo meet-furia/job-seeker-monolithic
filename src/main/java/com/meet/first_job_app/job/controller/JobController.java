@@ -18,13 +18,13 @@ public class JobController {
     JobService jobService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Job> getJobById(@PathVariable Long id) {
+    public ResponseEntity<?> getJobById(@PathVariable Long id) {
         Job job =  jobService.findJobById(id);
         if (job != null) {
 
             return new ResponseEntity<>(job, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Id: " + id + " not found", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/all")
@@ -33,7 +33,7 @@ public class JobController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createJobs(@RequestBody Job job) {
+    public ResponseEntity<String> createJob(@RequestBody Job job) {
         jobService.createJob(job);
         return new ResponseEntity<>("Job Added Successfully", HttpStatus.OK);
     }

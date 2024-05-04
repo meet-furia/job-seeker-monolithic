@@ -1,5 +1,6 @@
 package com.meet.first_job_app.company.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.meet.first_job_app.job.entities.Job;
 import com.meet.first_job_app.review.entities.Review;
 import jakarta.persistence.*;
@@ -14,10 +15,11 @@ public class Company {
     private String name;
     private String description;
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy = "company",cascade = CascadeType.ALL)
     private List<Job> jobs;
 
-    @OneToMany
+    @OneToMany(mappedBy = "company",cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     public Company() {

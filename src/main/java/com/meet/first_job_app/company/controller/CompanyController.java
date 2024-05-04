@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
-@RequestMapping("/companies")
+@RequestMapping("/company")
 public class CompanyController {
     CompanyService companyService;
 
@@ -22,10 +21,11 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable Long id) {
+    public ResponseEntity<?> getCompanyById(@PathVariable Long id) {
         Company company = companyService.getCompanyById(id);
         if (company == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Company with id: " + id + " not found",
+                    HttpStatus.NOT_FOUND);
         }
         else {
             return new ResponseEntity<>(company, HttpStatus.OK);
@@ -50,7 +50,7 @@ public class CompanyController {
             return new ResponseEntity<>(savedCompany, HttpStatus.OK);
         } else {
             String errorMessage = "Failed to create company. Please provide valid data.";
-            return new ResponseEntity<>("errorMessage", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -61,7 +61,7 @@ public class CompanyController {
             return new ResponseEntity<>(savedCompanies, HttpStatus.OK);
         } else {
             String errorMessage = "Failed to create company. Please provide valid data.";
-            return new ResponseEntity<>("errorMessage", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
         }
     }
 

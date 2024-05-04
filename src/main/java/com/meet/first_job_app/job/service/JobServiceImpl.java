@@ -1,5 +1,6 @@
 package com.meet.first_job_app.job.service;
 
+import com.meet.first_job_app.company.entities.Company;
 import com.meet.first_job_app.job.entities.Job;
 import com.meet.first_job_app.job.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,11 @@ public class JobServiceImpl implements JobService {
         }
         jobRepository.deleteAll();
         return true;
+    }
+
+    @Override
+    public Company findCompanyById(Long id) {
+        return jobRepository.findByCompanyId(id);
     }
 
 
